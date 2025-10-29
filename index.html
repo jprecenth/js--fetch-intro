@@ -4,21 +4,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Introduktion till datahämtning</title>
+    <title>Dicktionary</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bonbon&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Klee+One&display=swap" rel="stylesheet">
 </head>
 
-<body>
+<body onload="createFooter()">
+    <a href="/js--fetch-intro/index.html"><h1><span id="dick">Dick</span>tionary</h1></a>
     <div class="container">
-        <h1>Fetch API</h1>
-        <div class="form-container">
-            <form>
-                <input type="text" id="name" placeholder="Ange namn">
-                <button type="submit">Hämta</button>
+        <div class="form-container style-container">
+            <form onsubmit="fetchData(event)">
+                <input type="text" id="word" placeholder="Type here, fucker">
+                <button type="submit" id="searchBtn">Do a fucking search</button>
             </form>
-            <p>Inget namn angivet</p>
+            <p id="noSearch">Enter a word above, bitch.</p>
+            <div id="resultString">
+                <div id="word-container">
+                    <span id="chosenWord"></span>
+                    <div id="IPA-container">
+                        <span id="IPA"></span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-volume2-icon lucide-volume-2"><path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"/><path d="M16 9a5 5 0 0 1 0 6"/><path d="M19.364 18.364a9 9 0 0 0 0-12.728"/></svg>
+                    </div>
+                </div>
+                <span class="header">Part of Speech:</span>
+                <p>
+                    ❝<span id="chosenWord"></span>❞
+                    is a fucking <span  id="partOfSpeech" class="inputField"></span>.
+                </p> 
+                <span class="header">Definition:</span>
+                <p>
+                    It could be fucking defined as:
+                </p> 
+                <p class="inputField">
+                    ❝<span id="definition"></span>❞
+                </p>
+                <p>
+                    You'd know this if you weren't a fucking idiot.
+                </p>
+                <span class="header">Example Usage:</span>
+                <p>
+                    A non-idiot could use is as follows:
+                </p>
+                <p class="inputField">
+                    <span id="exampleSentence"></span>
+                </p>
+                <span class="header">Antonym:</span>
+                <p>
+                    The word's fucking antonym (that's its opposite, you imbecile) is:
+                </p>
+                <p class="inputField">
+                    <span id="antonym"></span>
+                </p>
+            </div>
+                   <svg xmlns="http://www.w3.org/2000/svg" width="250px" height="250px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="book-SVG"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+        </div>
+        <div class="sidebar-container style-container">
+            <div class="top-sidebar">
+                <h3>Recenth Searches</h3>
+                <ul id="recentSearchList">
+                </ul>
+            </div>
+            <div class="bottom-sidebar">
+                <p>―“Look up "idiot" in the dictionary. You know what you'll find?”</p>
+                <p>―“A picture of me?”</p>
+                <p>―“No! The definition of the word idiot, which you fucking are!”</p>
+                <br>
+                <p><a href="https://www.youtube.com/watch?v=liIcpPeZ12A" target="_blank">Kiss Kiss Bang Bang</a></p>
+            </div>
         </div>
     </div>
+    <footer id="footer">
+        <div id="flower-power">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flower" id="flower2"><circle cx="12" cy="12" r="3"/><path d="M12 16.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 1 1 12 7.5a4.5 4.5 0 1 1 4.5 4.5 4.5 4.5 0 1 1-4.5 4.5"/><path d="M12 7.5V9"/><path d="M7.5 12H9"/><path d="M16.5 12H15"/><path d="M12 16.5V15"/><path d="m8 8 1.88 1.88"/><path d="M14.12 9.88 16 8"/><path d="m8 16 1.88-1.88"/><path d="M14.12 14.12 16 16"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flower" id="flower 3"><path d="M12 5a3 3 0 1 1 3 3m-3-3a3 3 0 1 0-3 3m3-3v1M9 8a3 3 0 1 0 3 3M9 8h1m5 0a3 3 0 1 1-3 3m3-3h-1m-2 3v-1"/><circle cx="12" cy="8" r="2"/><path d="M12 10v12"/><path d="M12 22c4.2 0 7-1.667 7-5-4.2 0-7 1.667-7 5Z"/><path d="M12 22c-4.2 0-7-1.667-7-5 4.2 0 7 1.667 7 5Z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flower" id="flower1"><circle cx="12" cy="12" r="3"/><path d="M12 16.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 1 1 12 7.5a4.5 4.5 0 1 1 4.5 4.5 4.5 4.5 0 1 1-4.5 4.5"/><path d="M12 7.5V9"/><path d="M7.5 12H9"/><path d="M16.5 12H15"/><path d="M12 16.5V15"/><path d="m8 8 1.88 1.88"/><path d="M14.12 9.88 16 8"/><path d="m8 16 1.88-1.88"/><path d="M14.12 14.12 16 16"/></svg>
+        </div>
+    </footer>
 </body>
-
-</html>
+<script src="script.js"></script>
+</html> 
